@@ -4,15 +4,16 @@ import {
     Switch,
     Route
 } from 'react-router-dom';
-import Voting from './features/voting/Voting';
+
+import Topics from './features/topics/Topics';
 
 const App: React.FC = () => {
 
     return (
         <Router>
             <Switch>
-                <Route path='/voting'>
-                    <Voting />
+                <Route path='/topics'>
+                    <Topics />
                 </Route>
             </Switch>
         </Router>

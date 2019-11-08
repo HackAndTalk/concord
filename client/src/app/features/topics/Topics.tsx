@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Typography, AppBar, IconButton, Toolbar, Card, CardHeader, CardContent, CardActions, styled } from '@material-ui/core';
+import { Typography, AppBar, IconButton, Toolbar, styled, Fab, Dialog, DialogTitle, DialogContent, TextField, Button, DialogActions } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import Topic from './components/topic/Topic';
+import AddIcon from '@material-ui/icons/Add';
 
 const topics = [
     {
@@ -29,16 +29,31 @@ const topics = [
 
 ]
 
-const Topics = styled('div')(({ theme }) => ({
+const Root = styled('div')({
+    height: '100%',
+    display: 'grid',
+    gridTemplateColumns: 'auto 1fr'
+});
+
+const Content = styled('div')(({ theme }) => ({
     paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(2)
+    paddingBottom: theme.spacing(10)
 }));
 
 const TopicWithPadding = styled(Topic)(({ theme }) => ({
     margin: theme.spacing(1)
 }));
 
-const Voting: React.FC = () => {
+const AddFab = styled(Fab)(({ theme }) => ({
+    position: 'fixed',
+    right: theme.spacing(2),
+    bottom: theme.spacing(3),
+}))
+
+const Topics: React.FC = () => {
+    const [showDialog, setShowDialog] = React.useState(false);
+    const openDialog = React.useCallback(() => setShowDialog(true), []);
+    const closeDialog = React.useCallback(() => setShowDialog(false), []);
 
 
     return (
@@ -51,7 +66,7 @@ const Voting: React.FC = () => {
                     <Typography variant='h6'>Voting</Typography>
                 </Toolbar>
             </AppBar>
-            <Topics>
+            <Content>
                 {topics.map(topic => (
                     <TopicWithPadding
                         title={topic.title}
@@ -61,9 +76,59 @@ const Voting: React.FC = () => {
                         onToggleLike={() => { }}
                     />
                 ))}
-            </Topics>
+            </Content>
+            <AddFab 
+                onClick={openDialog}
+                color='secondary'
+            >
+                <AddIcon />
+            </AddFab>
+            <Dialog 
+                open={showDialog}
+                onClose={closeDialog}
+                fullScreen
+            >
+                <DialogTitle>Create Topic</DialogTitle>
+                <DialogContent>
+                    <TextField 
+                        variant='outlined'
+                        label='Title'
+                        placeholder='Life, the Universe and Everything'
+                        margin='normal'
+                        fullWidth
+                    />
+                    <TextField
+                        variant='outlined'
+                        label='Moderator'
+                        placeholder='John Doe'
+                        margin='normal'
+                        fullWidth
+                    />
+                    <TextField
+                        variant='outlined'
+                        label='Description'
+                        multiline
+                        rows={4}
+                        rowsMax={7}
+                        margin='normal'
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeDialog}>
+                        close
+                    </Button>
+                    <Button 
+                        variant='contained' 
+                        onClick={closeDialog}
+                        color='primary'
+                    >
+                        save
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }
 
-export default Voting;
+export default Topics;

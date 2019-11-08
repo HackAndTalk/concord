@@ -46,7 +46,7 @@ const Topic: React.FC<IProps & CardProps> = ({
             <CardActions>
                 <IconButton
                     onClick={toggleFavorite}
-                    color={favorite ? 'secondary' : 'inherit'}
+                    color={favorite ? 'secondary' : undefined}
                 >
                     <FavoriteIcon />
                 </IconButton>
