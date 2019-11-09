@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PageContainer from '../../components/PageContainer';
 import Title from '../../components/PageTitle';
 import { Typography, styled, Fab, Button, Table, TableBody } from '@material-ui/core';
 import CustomTextField from '../../components/CustomTextField';
@@ -8,24 +7,8 @@ import RoomDialog from './components/room-dialog/RoomDialog';
 import moment from 'moment';
 import Timeslot from './components/time-slot/Timeslot';
 import TimeSlotDialog from './components/time-slot-dialog/TimeSlotDialog';
-
-const FixedFab = styled(Fab)(({ theme }) => ({
-    display: 'block',
-    position: 'fixed',
-    left: theme.spacing(3),
-    right: theme.spacing(3),
-    bottom: theme.spacing(3),
-
-    width: `calc(100% - ${theme.spacing(3) * 2}px) !important`
-}));
-
-const FixedFabPageContainer = styled(PageContainer)(({ theme }) => ({
-    paddingBottom: theme.spacing(10)
-}))
-
-const Subtitle = styled(Typography)(({ theme }) => ({
-    // marginTop: theme.spacing(3)
-}));
+import FixedFabPageContainer from '../../components/FixedFabPageContainer';
+import FixedFab from '../../components/FixedFab';
 
 const Section = styled('div')(({ theme }) => ({
     marginTop: theme.spacing(3),
@@ -85,9 +68,9 @@ const CreateEvent: React.FC = () => {
 
             {/* ROOMS */}
             <Section>
-                <Subtitle variant='subtitle2'>
+                <Typography variant='subtitle2'>
                     ROOMS
-                </Subtitle>
+                </Typography>
                 <Table>
                     <TableBody>
                         {rooms.map(({ name, capacity }) => (
@@ -116,9 +99,9 @@ const CreateEvent: React.FC = () => {
 
             {/* TIME SLOTS */}
             <Section>
-                <Subtitle variant='subtitle2'>
+                <Typography variant='subtitle2'>
                     TIME SLOTS
-            </Subtitle>
+                </Typography>
                 <Table>
                     <TableBody>
                         {timeSlots.map(({ start, end }) => (
