@@ -9,10 +9,6 @@ import { Schedule } from './types'
 const populationSize = 100
 const numParents = 50
 
-const timeoutMs = 5 * 1000
-const start = Date.now()
-const end = start + timeoutMs
-
 const evaluateSchedule = (schedule: Schedule) => {
   return { schedule, penalty: penalty(schedule, gathering) }
 }
@@ -27,7 +23,8 @@ export const evolveSchedule = (gathering: Gathering): TimeSlotTopics[] => {
   let population = Array.from({ length: populationSize }, () =>
     randomSchedule(gathering),
   )
-  do {
+
+  for (let i = 0; i < 100; i++) {
     const evaluatedPopulation = population
       .map(evaluateSchedule)
       .sort((a, b) => a.penalty - b.penalty)
@@ -38,7 +35,7 @@ export const evolveSchedule = (gathering: Gathering): TimeSlotTopics[] => {
       Array.from({ length: 9 }, () => swapSessions(parent)),
     )
     population = [...parents, ...children]
-  } while (Date.now() < end)
+  }
 
   const bestSchedule = population[0]
 
