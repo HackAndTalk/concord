@@ -4,7 +4,7 @@ import Title from '../../components/PageTitle';
 import { Typography, TextField, styled, Fab, List, Button, ListItemText, ListItemSecondaryAction, ListItem, IconButton, Table, TableRow, TableBody, TableCell, Chip } from '@material-ui/core';
 import CustomTextField from '../../components/CustomTextField';
 import Room from './components/room/Room';
-import CreateRoomDialog from './components/room/CreateRoomDialog';
+import CreateRoomDialog from './components/create-room-dialog/CreateRoomDialog';
 
 const FixedFab = styled(Fab)(({ theme }) => ({
     display: 'block',
