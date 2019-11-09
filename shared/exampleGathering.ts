@@ -1,4 +1,4 @@
-const gathering: Gathering = {
+export const gathering: Gathering = {
   id: "g1",
   title: "Hack & Talk Barcamp",
   rooms: [
@@ -11,6 +11,11 @@ const gathering: Gathering = {
       id: "r2",
       name: "London",
       capacity: 30,
+    },
+    {
+      id: "r3",
+      name: "Stockholm",
+      capacity: 40,
     },
   ],
   timeSlots: [
