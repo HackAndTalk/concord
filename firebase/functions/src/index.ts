@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions'
 import { Gathering } from '../../../shared/types'
+import { evolveSchedule } from '../../../server/src/scheduler/'
 
 export const schedule = functions.firestore
   .document('gatherings/{gatheringId}')
@@ -12,9 +13,10 @@ export const schedule = functions.firestore
     const shouldSchedule =
       gatheringDataBefore.stage === 2 && gatheringDataAfter.stage === 3
 
-    // TODO: If shouldSchedule -> Use Ansgars function....
-
-    if (shouldSchedule) return after.ref.update({ schedule: 'André' })
+    if (shouldSchedule) {
+      const schedule = evolveSchedule(gatheringDataAfter)
+      return after.ref.update({ schedule: schedule })
+    }
 
     return null
   })
