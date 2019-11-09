@@ -14,8 +14,7 @@ export const schedule = functions.firestore
       gatheringDataBefore.stage === 2 && gatheringDataAfter.stage === 3
 
     if (shouldSchedule) {
-      const schedule = evolveSchedule(gatheringDataAfter)
-      return after.ref.update({ schedule: schedule })
+      return after.ref.update({ schedule: evolveSchedule(gatheringDataAfter) })
     }
 
     return null
