@@ -1,3 +1,9 @@
 {
-    "git.ignoreLimitWarning": true
+  "editor.formatOnSave": true,
+  "tslint.packageManager": "yarn",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true,
+  "javascript.format.enable": true,
+  "prettier.disableLanguages": ["markdown"]
 }
