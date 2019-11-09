@@ -1,11 +1,9 @@
 import * as React from 'react';
 import TableRow, { TableRowProps } from '@material-ui/core/TableRow';
-import { Typography, TableCell, Chip, styled } from '@material-ui/core';
-import ContainedIconButton from '../../../../components/ContainedIconButton';
+import { Typography, TableCell, Chip, styled, IconButton } from '@material-ui/core';
 
 
 import PersonIcon from '@material-ui/icons/Person';
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const NameCell = styled(TableCell)({
@@ -28,18 +26,15 @@ const CapacityIndicator = styled(Chip)({
 interface IProps {
     name: string;
     capacity: number;
-    onEdit: () => void;
     onDelete: () => void;
 }
 
 const Room: React.FC<IProps & TableRowProps> = ({
     name,
     capacity,
-    onEdit,
     onDelete,
     ...rowProps
 }) => {
-
     return (
         <TableRow>
             <NameCell>
@@ -55,12 +50,12 @@ const Room: React.FC<IProps & TableRowProps> = ({
                 />
             </TableCell>
             <ActionsCell>
-                <ContainedIconButton size='small'>
-                    <EditIcon />
-                </ContainedIconButton>
-                <ContainedIconButton size='small'>
+                <IconButton
+                    size='small'
+                    onClick={onDelete}
+                >
                     <DeleteIcon />
-                </ContainedIconButton>
+                </IconButton>
             </ActionsCell>
         </TableRow>
     )

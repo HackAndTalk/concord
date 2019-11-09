@@ -1,9 +1,7 @@
 import * as React from 'react';
 import TableRow, { TableRowProps } from '@material-ui/core/TableRow';
-import { Typography, TableCell, styled } from '@material-ui/core';
-import ContainedIconButton from '../../../../components/ContainedIconButton';
+import { Typography, TableCell, styled, IconButton } from '@material-ui/core';
 
-import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import moment from 'moment';
 
@@ -23,14 +21,12 @@ const ActionsCell = styled(TableCell)(({ theme }) => ({
 interface IProps {
     start: Date;
     end: Date;
-    onEdit: () => void;
     onDelete: () => void;
 }
 
 const Timeslot: React.FC<IProps & TableRowProps> = ({
     start,
     end,
-    onEdit,
     onDelete,
     ...rowProps
 }) => {
@@ -43,12 +39,12 @@ const Timeslot: React.FC<IProps & TableRowProps> = ({
                 </Typography>
             </NameCell>
             <ActionsCell>
-                <ContainedIconButton size='small'>
-                    <EditIcon />
-                </ContainedIconButton>
-                <ContainedIconButton size='small'>
+                <IconButton
+                    size='small'
+                    onClick={onDelete}
+                >
                     <DeleteIcon />
-                </ContainedIconButton>
+                </IconButton>
             </ActionsCell>
         </TableRow>
     )

@@ -24,7 +24,7 @@ const ActiveGathering: React.FC = () => {
 
   const gatheringContext = React.useMemo<TGatheringContext>(() => {
     if (!gathering || !userId)
-      return [null, {}];
+      return [null, {} as TGatheringContext];
 
     return [
       gathering,

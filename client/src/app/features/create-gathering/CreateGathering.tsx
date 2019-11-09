@@ -11,26 +11,12 @@ import FixedFabPageContainer from '../../components/FixedFabPageContainer';
 import FixedFab from '../../components/FixedFab';
 import { createGathering } from '../active-gathering/gathering-api';
 import { useUserId } from '../../hooks';
+import { Room as RoomType, TimeSlot as TimeSlotType } from '../../../../../shared/types';
 
 const Section = styled('div')(({ theme }) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3)
-}))
-
-const rooms = [
-    {
-        name: 'Stockholm',
-        capacity: 300
-    },
-    {
-        name: 'Malmö',
-        capacity: 40
-    },
-    {
-        name: 'Berlin',
-        capacity: 5
-    }
-];
+}));
 
 const timeSlots = [
     {
@@ -48,13 +34,20 @@ const timeSlots = [
 ]
 
 const CreateGathering: React.FC = () => {
+
+    const [rooms, setRooms] = React.useState<RoomType[]>([]);
     const [showRoomDialog, setShowRoomDialog] = React.useState(false);
     const openRoomDialog = React.useCallback(() => setShowRoomDialog(true), []);
     const closeRoomDialog = React.useCallback(() => setShowRoomDialog(false), []);
+    const addRoom = React.useCallback((room: RoomType) => setRooms(rooms.concat(room)), [rooms]);
+    const deleteRoom = React.useCallback((room: RoomType) => setRooms(rooms.filter(r => r !== room)), [rooms]);
 
+    const [timeSlots, setTimeSlots] = React.useState<TimeSlotType[]>([]);
     const [showTimeSlotDialog, setShowTimeSlotDialog] = React.useState(false);
     const openTimeSlotDialog = React.useCallback(() => setShowTimeSlotDialog(true), []);
     const closeTimeSlotDialog = React.useCallback(() => setShowTimeSlotDialog(false), []);
+    const addTimeSlot = React.useCallback((timeSlot: TimeSlotType) => setTimeSlots(timeSlots.concat(timeSlot)), []);
+    const deleteTimeSlot = React.useCallback((timeSlot: TimeSlotType) => setTimeSlots(timeSlots.filter(t => t !== timeSlot)), []);
 
     const [name, setName] = React.useState('');
     const onChangeName = React.useCallback(e => setName(e.target.value), []);
@@ -67,12 +60,12 @@ const CreateGathering: React.FC = () => {
     const onSubmit = React.useCallback(async () => {
         const id = await createGathering(userId, name, {
             title,
-            rooms: [],
-            timeSlots: []
+            rooms,
+            timeSlots
         });
 
-        window.location.pathname = id;;
-    }, [userId, name, title]);
+        window.location.pathname = id;
+    }, [userId, name, title, rooms, timeSlots]);
 
     return (
         <FixedFabPageContainer>
@@ -101,13 +94,12 @@ const CreateGathering: React.FC = () => {
                 </Typography>
                 <Table>
                     <TableBody>
-                        {rooms.map(({ name, capacity }) => (
+                        {rooms.map((room) => (
                             <Room
-                                key={name}
-                                name={name}
-                                capacity={capacity}
-                                onEdit={() => { }}
-                                onDelete={() => { }}
+                                key={room.id}
+                                name={room.name}
+                                capacity={room.capacity}
+                                onDelete={() => deleteRoom(room)}
                             />
                         ))}
                     </TableBody>
@@ -122,6 +114,7 @@ const CreateGathering: React.FC = () => {
                 <RoomDialog
                     open={showRoomDialog}
                     onClose={closeRoomDialog}
+                    onAddRoom={addRoom}
                 />
             </Section>
 
@@ -132,13 +125,12 @@ const CreateGathering: React.FC = () => {
                 </Typography>
                 <Table>
                     <TableBody>
-                        {timeSlots.map(({ start, end }) => (
+                        {timeSlots.map(timeSlot => (
                             <Timeslot
-                                key={start.toISOString()}
-                                start={start}
-                                end={end}
-                                onEdit={() => { }}
-                                onDelete={() => { }}
+                                key={timeSlot.id}
+                                start={timeSlot.startTime}
+                                end={timeSlot.endTime}
+                                onDelete={() => deleteTimeSlot(timeSlot)}
                             />
                         ))}
                     </TableBody>
@@ -153,6 +145,7 @@ const CreateGathering: React.FC = () => {
                 <TimeSlotDialog
                     open={showTimeSlotDialog}
                     onClose={closeTimeSlotDialog}
+                    onAddTimeSlot={addTimeSlot}
                 />
             </Section>
 
