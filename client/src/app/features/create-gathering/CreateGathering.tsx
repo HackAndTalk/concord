@@ -45,7 +45,7 @@ const timeSlots = [
     }
 ]
 
-const CreateEvent: React.FC = () => {
+const CreateGathering: React.FC = () => {
     const [showRoomDialog, setShowRoomDialog] = React.useState(false);
     const openRoomDialog = React.useCallback(() => setShowRoomDialog(true), []);
     const closeRoomDialog = React.useCallback(() => setShowRoomDialog(false), []);
@@ -142,5 +142,5 @@ const CreateEvent: React.FC = () => {
     )
 }
 
-export default CreateEvent;
+export default CreateGathering;
 

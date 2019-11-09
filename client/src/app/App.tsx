@@ -5,7 +5,7 @@ import {
 
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
-import CreateEvent from './features/create-event/CreateEvent';
+import CreateGathering from './features/create-gathering/CreateGathering';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 
@@ -18,7 +18,7 @@ const App: React.FC = () => {
                 <Router>
                     <Switch>
                         <Route path='/' exact>
-                            <CreateEvent />
+                            <CreateGathering />
                         </Route>
                         <Route>
                             <ActiveGathering />
