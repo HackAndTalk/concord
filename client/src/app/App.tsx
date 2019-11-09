@@ -14,63 +14,20 @@ import { initializeFirebase, subscribeToGathering, suggestTopic, attachId } from
 import { Gathering, Participant, Topic } from '../../../shared/types';
 import ActiveGathering from './features/active-gathering/ActiveGathering';
 
-interface GatheringApi {
-    suggestTopic: (topic: Pick<Topic, 'title' | 'description'>) => void;
-}
-type TGatheringContext = [Gathering, GatheringApi];
-
-const createGatheringApi = (gatheringId: string): GatheringApi => ({
-    suggestTopic: partial => {
-        const topic: Topic = attachId({
-            ...partial,
-            voterIds: [],
-            moderatorId: "12512512"
-        });
-
-        console.log({ topic, partial })
-
-        suggestTopic(gatheringId, topic);
-    }
-})
-
-export const GatheringContext = React.createContext<TGatheringContext | null>(null);
-
-
 const App: React.FC = () => {
-    const [gathering, setGathering] = React.useState<Gathering | null>(null);
-
-    React.useEffect(() => {
-        initializeFirebase();
-        subscribeToGathering('nubuvVs6JRAeTYZ5BR7s')((gathering: Gathering) => {
-            setGathering(gathering);
-        });
-    }, []);
-
-    const gatheringContext = React.useMemo<TGatheringContext | null>(() => {
-        if (!gathering)
-            return [];
-
-        return [
-            gathering,
-            createGatheringApi(gathering.id)
-        ];
-    }, [gathering]);
-
     return (
         <MuiPickersUtilsProvider utils={MomentUtils}>
             <ThemeProvider theme={theme}>
-                <GatheringContext.Provider value={gatheringContext}>
-                    <Router>
-                        <Switch>
-                            <Route path='/create-event' exact>
-                                <CreateEvent />
-                            </Route>
-                            <Route>
-                                <ActiveGathering />
-                            </Route>
-                        </Switch>
-                    </Router>
-                </GatheringContext.Provider>
+                <Router>
+                    <Switch>
+                        <Route path='/create-event' exact>
+                            <CreateEvent />
+                        </Route>
+                        <Route>
+                            <ActiveGathering />
+                        </Route>
+                    </Switch>
+                </Router>
             </ThemeProvider>
         </MuiPickersUtilsProvider>
     );

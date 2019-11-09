@@ -31,5 +31,5 @@ export type Gathering = {
   topics: Topic[]
   rooms: Room[]
   timeSlots: TimeSlot[]
-  stage: number
+  stage: 0 | 1 | 2 | 3
 }

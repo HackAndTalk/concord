@@ -1,24 +1,38 @@
 import * as React from 'react';
 import { useRouteMatch } from 'react-router';
-import CreateEvent from '../create-event/CreateEvent';
 import ShareEvent from '../share-event/ShareEvent';
 import Topics from '../topics/Topics';
-import { GatheringContext } from '../../App';
+import { GatheringContext, TGatheringContext, createGatheringApi } from './gathering-api';
+import { initializeFirebase, subscribeToGathering } from '../../../firebase/firebase';
+import { Gathering } from '../../../../../shared/types';
 
-const ActiveGathering: React.FC = ({ children }) => {
+const ActiveGathering: React.FC = () => {
+  const [gathering, setGathering] = React.useState<Gathering | null>(null);
   const match = useRouteMatch<{ gatheringId?: string }>('/:gatheringId');
   const gatheringId = match.params.gatheringId;
 
-  const [gathering] = React.useContext(GatheringContext);
+
+  React.useEffect(() => {
+    initializeFirebase();
+    subscribeToGathering(gatheringId)((gathering: Gathering) => {
+      setGathering(gathering);
+    });
+  }, [gatheringId]);
+
+
+  const gatheringContext = React.useMemo<TGatheringContext>(() => {
+    if (!gathering)
+      return [null, {}];
+
+    return [
+      gathering,
+      createGatheringApi(gathering.id)
+    ];
+  }, [gathering]);
 
   const gatheringStage = gathering && gathering.stage;
 
-  console.log({ match });
-
   const screen = React.useMemo(() => {
-    if (!gathering)
-      return null;
-
     switch (gatheringStage) {
       // STAGES
       // 0 - INVITATION PHASE
@@ -39,7 +53,11 @@ const ActiveGathering: React.FC = ({ children }) => {
     return null;
   }, [gatheringStage]);
 
-  return screen;
+  return (
+    <GatheringContext.Provider value={gatheringContext}>
+      {screen}
+    </GatheringContext.Provider>
+  );
 }
 
 export default ActiveGathering;
