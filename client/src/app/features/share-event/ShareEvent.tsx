@@ -11,13 +11,12 @@ const ResponsiveQRCode = styled(QRCode)({
 
 const URL = styled(Typography)(({ theme }) => ({
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3)
+    marginBottom: theme.spacing(3),
+    wordBreak: 'break-all'
 }))
 
 const ShareEvent: React.FC = () => {
-    const baseUrl = 'example.url';
-    const eventId = 'E6K5J';
-    const joinUrl = `${baseUrl}/${eventId}`
+    const url = window.location.href
 
     return (
         <PageContainer>
@@ -27,9 +26,9 @@ const ShareEvent: React.FC = () => {
             <Typography variant='subtitle1' paragraph>
                 Invite Participants to this Event
             </Typography>
-            <ResponsiveQRCode value={joinUrl} />
-            <URL variant='h5' align='center'>
-                {joinUrl}
+            <ResponsiveQRCode value={url} />
+            <URL variant='h5' paragraph>
+                {url}
             </URL>
         </PageContainer>
     )
