@@ -67,7 +67,7 @@ export const addParticipant = (
 ) =>
   firebase
     .firestore()
-    .collection('gathering')
+    .collection('gatherings')
     .doc(gatheringId)
     .update({
       participants: firebase.firestore.FieldValue.arrayUnion(participant),
@@ -86,7 +86,7 @@ export const voteForTopic = async (
 ) => {
   const gatheringRef = firebase
     .firestore()
-    .collection('gathering')
+    .collection('gatherings')
     .doc(gatheringId)
   const gatheringSnapshot = await gatheringRef.get()
 
