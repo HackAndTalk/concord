@@ -6,23 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import PageContainer from '../../components/PageContainer';
 import Title from '../../components/PageTitle';
 import { GatheringContext } from '../../App';
-
-const topics = [
-    {
-        id: 1,
-        title: 'What is Figma?',
-        moderator: 'John Wayne',
-        description: 'I’ll give you a brief explanation of Figma and how to use it',
-        like: false
-    },
-    {
-        id: 2,
-        title: 'What is Figma?',
-        moderator: 'John Wayne',
-        description: 'I’ll give you a brief explanation of Figma and how to use it',
-        like: false
-    }
-];
+import TopicDialog from './components/topic-dialog/TopicDialog';
 
 const AddFab = styled(Fab)(({ theme }) => ({
     position: 'fixed',
@@ -31,9 +15,11 @@ const AddFab = styled(Fab)(({ theme }) => ({
 }))
 
 const Topics: React.FC = () => {
-    const gathering = React.useContext(GatheringContext);
+    const [gathering] = React.useContext(GatheringContext);
 
-    const mode: 'suggest' | 'vote' = 'vote';
+    const mode = gathering.stage === 1
+        ? 'suggest'
+        : 'vote';
 
     const [showDialog, setShowDialog] = React.useState(false);
     const openDialog = React.useCallback(() => setShowDialog(true), []);
@@ -56,7 +42,7 @@ const Topics: React.FC = () => {
                     let like, onToggleLike;
 
                     if (mode === 'vote') {
-                        like = topic.like;
+                        like = false;
                         onToggleLike = () => { }
                     }
 
@@ -84,50 +70,10 @@ const Topics: React.FC = () => {
                     <AddIcon />
                 </AddFab>
             )}
-            <Dialog
+            <TopicDialog
                 open={showDialog}
                 onClose={closeDialog}
-                fullScreen
-            >
-                <DialogTitle>Create Topic</DialogTitle>
-                <DialogContent>
-                    <TextField
-                        variant='outlined'
-                        label='Title'
-                        placeholder='Life, the Universe and Everything'
-                        margin='normal'
-                        fullWidth
-                    />
-                    <TextField
-                        variant='outlined'
-                        label='Moderator'
-                        placeholder='John Doe'
-                        margin='normal'
-                        fullWidth
-                    />
-                    <TextField
-                        variant='outlined'
-                        label='Description'
-                        multiline
-                        rows={4}
-                        rowsMax={7}
-                        margin='normal'
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={closeDialog}>
-                        close
-                    </Button>
-                    <Button
-                        variant='contained'
-                        onClick={closeDialog}
-                        color='primary'
-                    >
-                        save
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            />
         </PageContainer>
     )
 }

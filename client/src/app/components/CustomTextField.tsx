@@ -13,6 +13,7 @@ const CustomTextField: React.FC<React.ComponentProps<typeof TextField>> = props 
     return (
         <TextField
             variant='outlined'
+            margin='normal'
             {...props}
             InputProps={{
                 classes,

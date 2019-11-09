@@ -26,7 +26,7 @@ export const initializeFirebase = (customConfig?: Object) =>
  */
 export const attachId = <T>(document: T): T & { id: string } => ({
   ...document,
-  id: uuid(),
+  id: uuid.v4(),
 })
 
 /**
