@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Typography, AppBar, IconButton, Toolbar, styled, Fab, Dialog, DialogTitle, DialogContent, TextField, Button, DialogActions } from '@material-ui/core';
+import { Typography, AppBar, IconButton, Toolbar, styled, Fab, Dialog, DialogTitle, DialogContent, TextField, Button, DialogActions, Box, Divider, List } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Topic from './components/topic/Topic';
 import AddIcon from '@material-ui/icons/Add';
@@ -7,37 +7,24 @@ import AddIcon from '@material-ui/icons/Add';
 const topics = [
     {
         id: 1,
-        title: 'Testing Apps with Jest and React-Testing-Library',
+        title: 'What is Figma?',
         moderator: 'John Wayne',
-        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+        description: 'I’ll give you a brief explanation of Figma and how to use it',
         like: false
     },
     {
-        id: 2,
-        title: 'Domain Driven Design',
-        moderator: 'Arnold Schwarzenegger',
-        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-        like: false
-    },
-    {
-        id: 3,
-        title: 'This is not a Test',
-        moderator: 'Arnold Schmeekers',
-        description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+        id: 1,
+        title: 'What is Figma?',
+        moderator: 'John Wayne',
+        description: 'I’ll give you a brief explanation of Figma and how to use it',
         like: false
     },
 
 ]
 
-const Root = styled('div')({
-    height: '100%',
-    display: 'grid',
-    gridTemplateColumns: 'auto 1fr'
-});
-
-const Content = styled('div')(({ theme }) => ({
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(10)
+const TopicList = styled(List)(({ theme }) => ({
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3)
 }));
 
 const TopicWithPadding = styled(Topic)(({ theme }) => ({
@@ -50,47 +37,69 @@ const AddFab = styled(Fab)(({ theme }) => ({
     bottom: theme.spacing(3),
 }))
 
+const Title = styled(Typography)(({ theme }) => ({
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+    paddingTop: theme.spacing(4)
+}));
+
 const Topics: React.FC = () => {
+    const mode: 'suggest' | 'vote' = 'vote';
+
     const [showDialog, setShowDialog] = React.useState(false);
     const openDialog = React.useCallback(() => setShowDialog(true), []);
     const closeDialog = React.useCallback(() => setShowDialog(false), []);
 
+    const titleText = mode === 'suggest'
+        ? 'Suggest topics you’d like to present'
+        : 'Vote for topics you’re interested in';
 
     return (
         <>
-            <AppBar>
-                <Toolbar>
-                    <IconButton color='inherit'>
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant='h6'>Voting</Typography>
-                </Toolbar>
-            </AppBar>
-            <Content>
-                {topics.map(topic => (
-                    <TopicWithPadding
-                        title={topic.title}
-                        moderator={topic.moderator}
-                        description={topic.description}
-                        like={false}
-                        onToggleLike={() => { }}
-                    />
-                ))}
-            </Content>
-            <AddFab 
-                onClick={openDialog}
-                color='secondary'
-            >
-                <AddIcon />
-            </AddFab>
-            <Dialog 
+            <Title variant='h6'>
+                {titleText}
+            </Title>
+            <TopicList>
+                {topics.map((topic, index) => {
+                    let like, onToggleLike;
+
+                    if (mode === 'vote') {
+                        like = topic.like;
+                        onToggleLike = () => {}
+                    }
+
+                    return (
+                        <React.Fragment key={topic.id}>
+                            {index > 0 && (
+                                <Divider />
+                            )}
+                            <Topic
+                                title={topic.title}
+                                moderator={topic.moderator}
+                                description={topic.description}
+                                like={like}
+                                onToggleLike={onToggleLike}
+                            />
+                        </React.Fragment>
+                    );
+                })}
+            </TopicList>
+            {mode === 'suggest' && (
+                <AddFab
+                    onClick={openDialog}
+                    color='secondary'
+                >
+                    <AddIcon />
+                </AddFab>
+            )}
+            <Dialog
                 open={showDialog}
                 onClose={closeDialog}
                 fullScreen
             >
                 <DialogTitle>Create Topic</DialogTitle>
                 <DialogContent>
-                    <TextField 
+                    <TextField
                         variant='outlined'
                         label='Title'
                         placeholder='Life, the Universe and Everything'
@@ -118,8 +127,8 @@ const Topics: React.FC = () => {
                     <Button onClick={closeDialog}>
                         close
                     </Button>
-                    <Button 
-                        variant='contained' 
+                    <Button
+                        variant='contained'
                         onClick={closeDialog}
                         color='primary'
                     >
