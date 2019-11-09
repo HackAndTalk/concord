@@ -9,22 +9,26 @@ import Topics from './features/topics/Topics';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
 import CreateEvent from './features/create-event/CreateEvent';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 
 const App: React.FC = () => {
 
     return (
-        <ThemeProvider theme={theme}>
-            <Router>
-                <Switch>
-                    <Route path='/create-event'>
-                        <CreateEvent />
-                    </Route>
-                    <Route path='/topics'>
-                        <Topics />
-                    </Route>
-                </Switch>
-            </Router>
-        </ThemeProvider>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+            <ThemeProvider theme={theme}>
+                <Router>
+                    <Switch>
+                        <Route path='/create-event'>
+                            <CreateEvent />
+                        </Route>
+                        <Route path='/topics'>
+                            <Topics />
+                        </Route>
+                    </Switch>
+                </Router>
+            </ThemeProvider>
+        </MuiPickersUtilsProvider>
     );
 }
 

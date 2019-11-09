@@ -16,8 +16,7 @@ const CreateButton = styled(Fab)({
     width: '100% !important'
 });
 
-const CreateRoomDialog: React.FC<DialogProps> = (props) => {
-
+const RoomDialog: React.FC<DialogProps> = (props) => {
     return (
         <Dialog {...props} fullWidth>
             <DialogTitle>Add Room</DialogTitle>
@@ -54,4 +53,4 @@ const CreateRoomDialog: React.FC<DialogProps> = (props) => {
     )
 }
 
-export default CreateRoomDialog;
+export default RoomDialog;
