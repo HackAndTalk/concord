@@ -13,6 +13,7 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import JoinEvent from './features/join-event/JoinEvent';
 import ShareEvent from './features/share-event/ShareEvent';
+import Schedule from './features/schedule/Schedule';
 
 const App: React.FC = () => {
 
@@ -32,6 +33,9 @@ const App: React.FC = () => {
                         </Route>
                         <Route path='/topics'>
                             <Topics />
+                        </Route>
+                        <Route path='/schedule'>
+                            <Schedule />
                         </Route>
                     </Switch>
                 </Router>
