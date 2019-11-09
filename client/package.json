@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/index.html"
+    "dev": "parcel src/index.html",
+    "test-firebase": "yarn ts-node-dev src/firebase/test.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^12.12.7",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "@types/react-router-dom": "^5.1.2",
@@ -21,11 +23,17 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/pickers": "^3.2.7",
     "moment": "^2.24.0",
+    "@types/uuid": "^3.4.6",
+    "dotenv": "^8.2.0",
+    "firebase": "^7.3.0",
+    "immer": "^5.0.0",
     "normalize.css": "^8.0.1",
     "qrcode.react": "^1.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
-    "typeface-roboto": "0.0.75"
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typeface-roboto": "0.0.75",
+    "uuid": "^3.3.3"
   }
 }
