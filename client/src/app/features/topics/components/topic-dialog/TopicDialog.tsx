@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@material-ui/core';
 import { DialogProps } from '@material-ui/core/Dialog';
 import CustomTextField from '../../../../components/CustomTextField';
-import { GatheringContext } from '../../../../App';
+import { GatheringContext } from '../../../active-gathering/gathering-api';
 
 const TopicDialog: React.FC<DialogProps> = (props) => {
   const [title, setTitle] = React.useState('');

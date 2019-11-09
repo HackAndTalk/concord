@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { Card, CardHeader, CardContent, CardActions, IconButton, Typography, Collapse, ListItem, ListItemSecondaryAction, ListItemText, styled } from '@material-ui/core';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import { IconButton, ListItem, ListItemSecondaryAction, ListItemText, styled } from '@material-ui/core';
 import { CardProps } from '@material-ui/core/Card';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 
@@ -39,7 +36,7 @@ const Topic: React.FC<IProps & CardProps> = ({
             />
             {likable && (
                 <ListItemSecondaryAction>
-                    <IconButton 
+                    <IconButton
                         edge='end'
                         onClick={onToggleLike}
                     >

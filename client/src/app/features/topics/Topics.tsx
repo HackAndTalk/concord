@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { Typography, AppBar, IconButton, Toolbar, styled, Fab, Dialog, DialogTitle, DialogContent, TextField, Button, DialogActions, Box, Divider, List } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
+import { styled, Fab, Divider, List } from '@material-ui/core';
 import Topic from './components/topic/Topic';
 import AddIcon from '@material-ui/icons/Add';
 import PageContainer from '../../components/PageContainer';
 import Title from '../../components/PageTitle';
-import { GatheringContext } from '../../App';
+import { GatheringContext } from '../../features/active-gathering/gathering-api';
 import TopicDialog from './components/topic-dialog/TopicDialog';
 
 const AddFab = styled(Fab)(({ theme }) => ({
