@@ -2,31 +2,45 @@ import * as React from 'react';
 import { IconButton, ListItem, ListItemSecondaryAction, ListItemText, styled } from '@material-ui/core';
 import { CardProps } from '@material-ui/core/Card';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import { GatheringContext } from '../../../active-gathering/gathering-api';
+import { Topic as TopicType } from '../../../../../../../shared/types';
+import { useUserId } from '../../../../hooks';
 
 const TopicText = styled(ListItemText)(({ theme }) => ({
     paddingRight: theme.spacing(4)
 }));
 
 interface IProps {
-    title: string;
-    moderator: string;
-    description: string;
-    like?: boolean;
-    onToggleLike?: () => void;
+    topicId: string;
 }
 
 const Topic: React.FC<IProps & CardProps> = ({
-    title,
-    moderator,
-    description,
-    like,
-    onToggleLike,
+    topicId,
     ...cardProps
 }) => {
-    const [favorite, setFavorite] = React.useState(false);
-    const toggleFavorite = React.useCallback(() => setFavorite(!favorite), [favorite]);
+    const userId = useUserId();
+    const [gathering, { toggleVoteForTopic }] = React.useContext(GatheringContext);
+    const topic: TopicType | null = React.useMemo(() => {
+        if (!gathering)
+            return null;
 
-    const likable = like !== undefined && onToggleLike !== undefined;
+        return gathering.topics.find(t => t.id === topicId);
+    }, [gathering]);
+
+    const likable = gathering && gathering.stage === 2;
+
+    const liked = React.useMemo(() => {
+        return !!topic.voterIds.find(id => id === userId);
+    }, [topic, userId]);
+
+    const toggleVote = React.useCallback(() => {
+        toggleVoteForTopic(topicId);
+    }, [topicId])
+
+    if (!topic)
+        return null;
+
+    const { title, description } = topic;
 
     return (
         <ListItem disableGutters>
@@ -38,10 +52,10 @@ const Topic: React.FC<IProps & CardProps> = ({
                 <ListItemSecondaryAction>
                     <IconButton
                         edge='end'
-                        onClick={onToggleLike}
+                        onClick={toggleVote}
                     >
                         <ThumbUpIcon
-                            color={like ? 'primary' : undefined}
+                            color={liked ? 'primary' : undefined}
                         />
                     </IconButton>
                 </ListItemSecondaryAction>

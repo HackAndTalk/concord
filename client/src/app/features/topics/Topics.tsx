@@ -37,29 +37,14 @@ const Topics: React.FC = () => {
                 {titleText}
             </Title>
             <List>
-                {gathering.topics.map((topic, index) => {
-                    let like, onToggleLike;
-
-                    if (mode === 'vote') {
-                        like = false;
-                        onToggleLike = () => { }
-                    }
-
-                    return (
-                        <React.Fragment key={topic.id}>
-                            {index > 0 && (
-                                <Divider />
-                            )}
-                            <Topic
-                                title={topic.title}
-                                moderator={''}
-                                description={topic.description}
-                                like={like}
-                                onToggleLike={onToggleLike}
-                            />
-                        </React.Fragment>
-                    );
-                })}
+                {gathering.topics.map(({ id }, index) => (
+                    <React.Fragment key={id}>
+                        {index > 0 && (
+                            <Divider />
+                        )}
+                        <Topic topicId={id} />
+                    </React.Fragment>
+                ))}
             </List>
             {mode === 'suggest' && (
                 <AddFab

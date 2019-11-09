@@ -86,7 +86,7 @@ export const suggestTopic = (gatheringId: string, topic: Topic) =>
     .doc(`/gatherings/${gatheringId}`)
     .update({ topics: firebase.firestore.FieldValue.arrayUnion(topic) })
 
-export const voteForTopic = async (
+export const toggleVoteForTopic = async (
   gatheringId: string,
   topicId: string,
   participantId: string,
