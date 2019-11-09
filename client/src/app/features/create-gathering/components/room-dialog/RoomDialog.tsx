@@ -35,6 +35,8 @@ const RoomDialog: React.FC<IProps & DialogProps> = ({ onAddRoom, ...props }) => 
             capacity,
             id: uuid.v4()
         });
+        setName('');
+        setCapacity('');
         props.onClose(e, 'backdropClick');
     }, [name, capacity]);
 

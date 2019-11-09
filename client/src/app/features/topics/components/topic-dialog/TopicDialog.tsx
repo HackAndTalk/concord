@@ -21,7 +21,9 @@ const TopicDialog: React.FC<DialogProps> = (props) => {
     suggestTopic({
       title,
       description
-    })
+    });
+    setTitle('');
+    setDescription('');
     props.onClose(e, 'backdropClick');
   }, [props.onClose, title, description]);
 

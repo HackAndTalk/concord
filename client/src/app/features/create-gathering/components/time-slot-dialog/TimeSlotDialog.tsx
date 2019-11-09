@@ -22,13 +22,15 @@ const TimeSlotDialog: React.FC<IProps & DialogProps> = ({ onAddTimeSlot, ...prop
     const [startTime, setStartTime] = React.useState(new Date());
     const [endTime, setEndTime] = React.useState(moment().add(1, 'hour').toDate());
 
-    const onSubmit = React.useCallback(() => {
+    const onSubmit = React.useCallback((e) => {
         onAddTimeSlot({
             startTime,
             endTime,
             id: uuid.v4()
         });
-        props.onClose();
+        setStartTime(new Date());
+        setEndTime(moment().add(1, 'hour').toDate())
+        props.onClose(e, 'backdropClick');
     }, [startTime, endTime]);
 
     return (
