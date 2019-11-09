@@ -32,11 +32,15 @@ export const attachId = <T>(document: T): T & { id: string } => ({
 /**
  * Subscribe functions
  */
-export const subscribeToGathering = (gatheringId: string) =>
+export const subscribeToGathering = (gatheringId: string) => (onData: any) =>
   firebase
     .firestore()
-    .collection('gaterings')
-    .doc(gatheringId).onSnapshot
+    .collection('gatherings')
+    .doc(gatheringId)
+    .onSnapshot({
+      next: gatheringSnapshot =>
+        onData({ id: gatheringSnapshot.id, ...gatheringSnapshot.data() }),
+    })
 
 /**
  * Organizer functions
