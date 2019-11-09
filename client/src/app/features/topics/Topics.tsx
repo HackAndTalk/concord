@@ -5,6 +5,7 @@ import Topic from './components/topic/Topic';
 import AddIcon from '@material-ui/icons/Add';
 import PageContainer from '../../components/PageContainer';
 import Title from '../../components/PageTitle';
+import { GatheringContext } from '../../App';
 
 const topics = [
     {
@@ -30,6 +31,8 @@ const AddFab = styled(Fab)(({ theme }) => ({
 }))
 
 const Topics: React.FC = () => {
+    const gathering = React.useContext(GatheringContext);
+
     const mode: 'suggest' | 'vote' = 'vote';
 
     const [showDialog, setShowDialog] = React.useState(false);
@@ -40,13 +43,16 @@ const Topics: React.FC = () => {
         ? 'Suggest topics you’d like to present'
         : 'Vote for topics you’re interested in';
 
+    if (!gathering)
+        return null;
+
     return (
         <PageContainer>
             <Title variant='h6'>
                 {titleText}
             </Title>
             <List>
-                {topics.map((topic, index) => {
+                {gathering.topics.map((topic, index) => {
                     let like, onToggleLike;
 
                     if (mode === 'vote') {
@@ -61,7 +67,7 @@ const Topics: React.FC = () => {
                             )}
                             <Topic
                                 title={topic.title}
-                                moderator={topic.moderator}
+                                moderator={''}
                                 description={topic.description}
                                 like={like}
                                 onToggleLike={onToggleLike}
