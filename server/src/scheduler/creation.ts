@@ -1,4 +1,5 @@
 import { Gathering } from '../../../shared/types'
+import { Schedule } from '../scheduler/types'
 
 export const randomSchedule = ({
   timeSlots,

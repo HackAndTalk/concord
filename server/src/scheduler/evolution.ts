@@ -4,6 +4,7 @@ import { swapSessions } from './mutation'
 import { Gathering, Topic } from '../../../shared/types'
 
 import { gathering } from '../../../shared/randomGathering'
+import { Schedule } from './types'
 
 const populationSize = 100
 const numParents = 50

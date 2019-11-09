@@ -1,4 +1,5 @@
 import { Gathering } from '../../../shared/types'
+import { Schedule } from './types'
 
 const sum = (array: number[]): number => array.reduce((a, b) => a + b, 0)
 

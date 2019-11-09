@@ -1,10 +1,10 @@
-type Session = {
-  topicId: string;
-  roomId: string;
-};
+export type Session = {
+  topicId: string
+  roomId: string
+}
 
-type TimeSlotSessions = Session[];
+export type TimeSlotSessions = Session[]
 
-type Schedule = {
-  timeSlotSessions: TimeSlotSessions[];
-};
+export type Schedule = {
+  timeSlotSessions: TimeSlotSessions[]
+}
