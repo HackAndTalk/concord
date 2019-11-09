@@ -63,7 +63,7 @@ export const nextStage = (gatheringId: string) =>
  */
 export const addParticipant = (
   gatheringId: string,
-  participant: Omit<Participant, 'id'>,
+  participant: Participant
 ) =>
   firebase
     .firestore()

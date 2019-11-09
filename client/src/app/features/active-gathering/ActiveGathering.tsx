@@ -5,12 +5,13 @@ import Topics from '../topics/Topics';
 import { GatheringContext, TGatheringContext, createGatheringApi } from './gathering-api';
 import { initializeFirebase, subscribeToGathering } from '../../../firebase/firebase';
 import { Gathering } from '../../../../../shared/types';
+import { useUserId } from '../../hooks';
+import JoinEvent from '../join-event/JoinEvent';
 
 const ActiveGathering: React.FC = () => {
   const [gathering, setGathering] = React.useState<Gathering | null>(null);
   const match = useRouteMatch<{ gatheringId?: string }>('/:gatheringId');
   const gatheringId = match.params.gatheringId;
-
 
   React.useEffect(() => {
     initializeFirebase();
@@ -19,22 +20,34 @@ const ActiveGathering: React.FC = () => {
     });
   }, [gatheringId]);
 
+  const userId = useUserId();
 
   const gatheringContext = React.useMemo<TGatheringContext>(() => {
-    if (!gathering)
+    if (!gathering || !userId)
       return [null, {}];
 
     return [
       gathering,
-      createGatheringApi(gathering.id)
+      createGatheringApi(gathering.id, userId)
     ];
-  }, [gathering]);
+  }, [gathering, userId]);
 
-  const gatheringStage = gathering && gathering.stage;
 
   const screen = React.useMemo(() => {
-    switch (gatheringStage) {
-      // STAGES
+    // gathering is invalid or did not finish loading yet
+    if (!gathering)
+      return null;
+
+    const { stage, participants } = gathering;
+
+    const isParticipant = !!participants
+      .find(p => p.id === userId);
+
+    if (!isParticipant)
+      return <JoinEvent />;
+
+    // STAGES
+    switch (stage) {
       // 0 - INVITATION PHASE
       case 0:
         return <ShareEvent />
@@ -51,7 +64,7 @@ const ActiveGathering: React.FC = () => {
     }
 
     return null;
-  }, [gatheringStage]);
+  }, [gathering, userId]);
 
   return (
     <GatheringContext.Provider value={gatheringContext}>
