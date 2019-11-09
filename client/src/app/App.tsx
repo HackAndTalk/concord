@@ -12,6 +12,7 @@ import CreateEvent from './features/create-event/CreateEvent';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import JoinEvent from './features/join-event/JoinEvent';
+import ShareEvent from './features/share-event/ShareEvent';
 
 const App: React.FC = () => {
 
@@ -20,11 +21,14 @@ const App: React.FC = () => {
             <ThemeProvider theme={theme}>
                 <Router>
                     <Switch>
+                        <Route path='/create-event'>
+                            <CreateEvent />
+                        </Route>
                         <Route path='/join-event'>
                             <JoinEvent />
                         </Route>
-                        <Route path='/create-event'>
-                            <CreateEvent />
+                        <Route path='/share-event'>
+                            <ShareEvent />
                         </Route>
                         <Route path='/topics'>
                             <Topics />
