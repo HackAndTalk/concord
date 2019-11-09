@@ -22,8 +22,11 @@ const ShareEvent: React.FC = () => {
     return (
         <PageContainer>
             <PageTitle variant='h6'>
-                Join this Event
+                This Event
             </PageTitle>
+            <Typography variant='subtitle1' paragraph>
+                Invite Participants to this Event
+            </Typography>
             <ResponsiveQRCode value={joinUrl} />
             <URL variant='h5' align='center'>
                 {joinUrl}
