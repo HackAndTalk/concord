@@ -3,7 +3,7 @@ import { useRouteMatch } from 'react-router';
 import ShareEvent from '../share-event/ShareEvent';
 import Topics from '../topics/Topics';
 import { GatheringContext, TGatheringContext, createGatheringApi } from './gathering-api';
-import { initializeFirebase, subscribeToGathering } from '../../../firebase/firebase';
+import { subscribeToGathering } from '../../../firebase/firebase';
 import { Gathering } from '../../../../../shared/types';
 import { useUserId } from '../../hooks';
 import JoinEvent from '../join-event/JoinEvent';
@@ -14,7 +14,6 @@ const ActiveGathering: React.FC = () => {
   const gatheringId = match.params.gatheringId;
 
   React.useEffect(() => {
-    initializeFirebase();
     subscribeToGathering(gatheringId)((gathering: Gathering) => {
       setGathering(gathering);
     });

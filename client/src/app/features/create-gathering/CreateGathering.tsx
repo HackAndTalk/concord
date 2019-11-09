@@ -9,6 +9,8 @@ import Timeslot from './components/time-slot/Timeslot';
 import TimeSlotDialog from './components/time-slot-dialog/TimeSlotDialog';
 import FixedFabPageContainer from '../../components/FixedFabPageContainer';
 import FixedFab from '../../components/FixedFab';
+import { createGathering } from '../active-gathering/gathering-api';
+import { useUserId } from '../../hooks';
 
 const Section = styled('div')(({ theme }) => ({
     marginTop: theme.spacing(3),
@@ -54,6 +56,23 @@ const CreateGathering: React.FC = () => {
     const openTimeSlotDialog = React.useCallback(() => setShowTimeSlotDialog(true), []);
     const closeTimeSlotDialog = React.useCallback(() => setShowTimeSlotDialog(false), []);
 
+    const [name, setName] = React.useState('');
+    const onChangeName = React.useCallback(e => setName(e.target.value), []);
+
+    const [title, setTitle] = React.useState('');
+    const onChangeTitle = React.useCallback(e => setTitle(e.target.value), []);
+
+    const userId = useUserId();
+
+    const onSubmit = React.useCallback(async () => {
+        const id = await createGathering(userId, name, {
+            title,
+            rooms: [],
+            timeSlots: []
+        });
+
+        window.location.pathname = id;;
+    }, [userId, name, title]);
 
     return (
         <FixedFabPageContainer>
@@ -62,8 +81,17 @@ const CreateGathering: React.FC = () => {
             </Title>
             <CustomTextField
                 fullWidth
-                placeholder='Name'
+                placeholder='Event Name'
                 margin='normal'
+                value={title}
+                onChange={onChangeTitle}
+            />
+            <CustomTextField
+                fullWidth
+                placeholder='Your Name'
+                margin='normal'
+                value={name}
+                onChange={onChangeName}
             />
 
             {/* ROOMS */}
@@ -134,6 +162,7 @@ const CreateGathering: React.FC = () => {
                     variant='extended'
                     color='primary'
                     size='medium'
+                    onClick={onSubmit}
                 >
                     Create Event
                 </FixedFab>

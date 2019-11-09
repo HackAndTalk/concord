@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Gathering, Topic, Participant } from "../../../../../shared/types";
-import { attachId, suggestTopic, addParticipant } from "../../../firebase/firebase";
+import { attachId, suggestTopic, addParticipant, addGathering } from "../../../firebase/firebase";
 
 interface GatheringApi {
   suggestTopic: (topic: Pick<Topic, 'title' | 'description'>) => void;
@@ -26,7 +26,26 @@ export const createGatheringApi = (gatheringId: string, userId: string): Gatheri
 
     addParticipant(gatheringId, participant);
   }
-})
+});
+
+export const createGathering = async (userId: string, name: string, { rooms, timeSlots, title }: Pick<Gathering, 'rooms' | 'timeSlots' | 'title'>) => {
+  const { id: gatheringId } = await addGathering({
+    participants: [],
+    stage: 0,
+    topics: [],
+    rooms,
+    timeSlots,
+    title,
+  });
+
+  await addParticipant(gatheringId, {
+    id: userId,
+    isAdmin: true,
+    name
+  });
+
+  return gatheringId;
+}
 
 export type TGatheringContext = [Gathering | null, GatheringApi];
 

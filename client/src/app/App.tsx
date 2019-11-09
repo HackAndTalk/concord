@@ -10,6 +10,9 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 
 import ActiveGathering from './features/active-gathering/ActiveGathering';
+import { initializeFirebase } from '../firebase/firebase';
+
+initializeFirebase();
 
 const App: React.FC = () => {
     return (
