@@ -8,6 +8,7 @@ import {
 import Topics from './features/topics/Topics';
 import { ThemeProvider } from '@material-ui/styles';
 import theme from './theme';
+import CreateEvent from './features/create-event/CreateEvent';
 
 const App: React.FC = () => {
 
@@ -15,6 +16,9 @@ const App: React.FC = () => {
         <ThemeProvider theme={theme}>
             <Router>
                 <Switch>
+                    <Route path='/create-event'>
+                        <CreateEvent />
+                    </Route>
                     <Route path='/topics'>
                         <Topics />
                     </Route>

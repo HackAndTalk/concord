@@ -3,6 +3,8 @@ import { Typography, AppBar, IconButton, Toolbar, styled, Fab, Dialog, DialogTit
 import MenuIcon from '@material-ui/icons/Menu';
 import Topic from './components/topic/Topic';
 import AddIcon from '@material-ui/icons/Add';
+import PageContainer from '../../components/PageContainer';
+import Title from '../../components/PageTitle';
 
 const topics = [
     {
@@ -13,35 +15,19 @@ const topics = [
         like: false
     },
     {
-        id: 1,
+        id: 2,
         title: 'What is Figma?',
         moderator: 'John Wayne',
         description: 'I’ll give you a brief explanation of Figma and how to use it',
         like: false
-    },
-
-]
-
-const TopicList = styled(List)(({ theme }) => ({
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3)
-}));
-
-const TopicWithPadding = styled(Topic)(({ theme }) => ({
-    margin: theme.spacing(1)
-}));
+    }
+];
 
 const AddFab = styled(Fab)(({ theme }) => ({
     position: 'fixed',
     right: theme.spacing(2),
     bottom: theme.spacing(3),
 }))
-
-const Title = styled(Typography)(({ theme }) => ({
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-    paddingTop: theme.spacing(4)
-}));
 
 const Topics: React.FC = () => {
     const mode: 'suggest' | 'vote' = 'vote';
@@ -55,17 +41,17 @@ const Topics: React.FC = () => {
         : 'Vote for topics you’re interested in';
 
     return (
-        <>
+        <PageContainer>
             <Title variant='h6'>
                 {titleText}
             </Title>
-            <TopicList>
+            <List>
                 {topics.map((topic, index) => {
                     let like, onToggleLike;
 
                     if (mode === 'vote') {
                         like = topic.like;
-                        onToggleLike = () => {}
+                        onToggleLike = () => { }
                     }
 
                     return (
@@ -83,7 +69,7 @@ const Topics: React.FC = () => {
                         </React.Fragment>
                     );
                 })}
-            </TopicList>
+            </List>
             {mode === 'suggest' && (
                 <AddFab
                     onClick={openDialog}
@@ -136,7 +122,7 @@ const Topics: React.FC = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </>
+        </PageContainer>
     )
 }
 
