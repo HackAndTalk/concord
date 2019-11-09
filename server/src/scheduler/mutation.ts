@@ -1,9 +1,7 @@
-import { Gathering } from '../../../shared/types'
+import { Schedule } from './types'
 
 const randomIndex = (array: unknown[]): number =>
   Math.floor(Math.random() * array.length)
-
-const randomChoice = <T>(array: T[]): T => array[randomIndex(array)]
 
 export const swapSessions = (schedule: Schedule): Schedule => {
   const { timeSlotSessions } = schedule
