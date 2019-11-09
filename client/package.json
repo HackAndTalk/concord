@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/index.html"
+    "dev": "parcel src/index.html",
+    "test-firebase": "yarn ts-node-dev src/firebase/test.ts"
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,8 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
-    "typeface-roboto": "0.0.75"
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typeface-roboto": "0.0.75",
+    "uuid": "^3.3.3"
   }
 }
