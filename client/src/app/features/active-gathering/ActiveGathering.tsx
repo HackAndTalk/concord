@@ -7,6 +7,7 @@ import { subscribeToGathering } from '../../../firebase/firebase';
 import { Gathering } from '../../../../../shared/types';
 import { useUserId } from '../../hooks';
 import JoinEvent from '../join-event/JoinEvent';
+import AdminPanel from './components/AdminPanel';
 
 const ActiveGathering: React.FC = () => {
   const [gathering, setGathering] = React.useState<Gathering | null>(null);
@@ -68,6 +69,7 @@ const ActiveGathering: React.FC = () => {
   return (
     <GatheringContext.Provider value={gatheringContext}>
       {screen}
+      <AdminPanel />
     </GatheringContext.Provider>
   );
 }

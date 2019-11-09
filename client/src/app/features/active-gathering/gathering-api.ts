@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Gathering, Topic, Participant } from "../../../../../shared/types";
-import { attachId, suggestTopic, addParticipant, addGathering } from "../../../firebase/firebase";
+import { attachId, suggestTopic, addParticipant, addGathering, nextStage, prevStage } from "../../../firebase/firebase";
 
 interface GatheringApi {
   suggestTopic: (topic: Pick<Topic, 'title' | 'description'>) => void;
   joinGathering: (name: string, isAdmin?: boolean) => void;
+  nextStage: () => void;
+  prevStage: () => void;
 }
 
 export const createGatheringApi = (gatheringId: string, userId: string): GatheringApi => ({
@@ -25,6 +27,12 @@ export const createGatheringApi = (gatheringId: string, userId: string): Gatheri
     };
 
     addParticipant(gatheringId, participant);
+  },
+  nextStage: () => {
+    nextStage(gatheringId);
+  },
+  prevStage: () => {
+    prevStage(gatheringId);
   }
 });
 

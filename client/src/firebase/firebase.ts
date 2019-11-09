@@ -56,7 +56,14 @@ export const nextStage = (gatheringId: string) =>
     .firestore()
     .collection('gatherings')
     .doc(gatheringId)
-    .update({ stage: firebase.firestore.FieldValue.increment })
+    .update({ stage: firebase.firestore.FieldValue.increment(1) })
+
+export const prevStage = (gatheringId: string) =>
+  firebase
+    .firestore()
+    .collection('gatherings')
+    .doc(gatheringId)
+    .update({ stage: firebase.firestore.FieldValue.increment(-1) })
 
 /**
  * Particpiant functions
