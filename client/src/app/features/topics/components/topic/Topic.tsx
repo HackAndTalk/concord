@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { IconButton, ListItem, ListItemSecondaryAction, ListItemText, styled } from '@material-ui/core';
 import { CardProps } from '@material-ui/core/Card';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import LikedIcon from '@material-ui/icons/ThumbUp';
+import NotLikedIcon from '@material-ui/icons/ThumbUpOutlined';
 import { GatheringContext } from '../../../active-gathering/gathering-api';
 import { Topic as TopicType } from '../../../../../../../shared/types';
 import { useUserId } from '../../../../hooks';
@@ -54,9 +55,14 @@ const Topic: React.FC<IProps & CardProps> = ({
                         edge='end'
                         onClick={toggleVote}
                     >
-                        <ThumbUpIcon
-                            color={liked ? 'primary' : undefined}
-                        />
+                        {liked ? (
+                            <LikedIcon
+                                color='primary'
+                            />
+
+                        ) : (
+                                <NotLikedIcon />
+                            )}
                     </IconButton>
                 </ListItemSecondaryAction>
             )}

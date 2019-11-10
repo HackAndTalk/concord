@@ -49,7 +49,7 @@ const Topics: React.FC = () => {
             {mode === 'suggest' && (
                 <AddFab
                     onClick={openDialog}
-                    color='secondary'
+                    color='primary'
                 >
                     <AddIcon />
                 </AddFab>
