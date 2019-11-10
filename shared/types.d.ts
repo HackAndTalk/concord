@@ -41,7 +41,12 @@ export type RoomTopic = {
 }
 
 export type TimeSlotTopics = {
-  startTime: Date
-  endTime: Date
+  startTime: FirebaseTimestamp
+  endTime: FirebaseTimestamp
   roomTopics: RoomTopic[]
+}
+
+export type FirebaseTimestamp = {
+  seconds: number
+  nanoseconds: number
 }

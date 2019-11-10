@@ -155,7 +155,7 @@ const Timeline: React.FC<TimelineProps> = ({ schedule }) => {
 
         return (
           <TopicRow
-            time={moment(timeslot.startTime).format('HH:mm')}
+            time={moment(timeslot.startTime.seconds * 1000).format('HH:mm')}
             topicName={topics[0].topic.title}
             roomName={topics[0].room.name}
             isLast={index === schedule.length - 1}
