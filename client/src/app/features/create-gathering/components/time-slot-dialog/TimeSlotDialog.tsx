@@ -42,6 +42,7 @@ const TimeSlotDialog: React.FC<IProps & DialogProps> = ({ onAddTimeSlot, ...prop
                     value={startTime}
                     inputVariant='outlined'
                     margin='normal'
+
                 />
                 <TimePicker
                     onChange={setEndTime}

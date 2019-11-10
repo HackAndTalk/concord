@@ -46,8 +46,8 @@ const CreateGathering: React.FC = () => {
     const [showTimeSlotDialog, setShowTimeSlotDialog] = React.useState(false);
     const openTimeSlotDialog = React.useCallback(() => setShowTimeSlotDialog(true), []);
     const closeTimeSlotDialog = React.useCallback(() => setShowTimeSlotDialog(false), []);
-    const addTimeSlot = React.useCallback((timeSlot: TimeSlotType) => setTimeSlots(timeSlots.concat(timeSlot)), []);
-    const deleteTimeSlot = React.useCallback((timeSlot: TimeSlotType) => setTimeSlots(timeSlots.filter(t => t !== timeSlot)), []);
+    const addTimeSlot = React.useCallback((timeSlot: TimeSlotType) => setTimeSlots(timeSlots.concat(timeSlot)), [timeSlots]);
+    const deleteTimeSlot = React.useCallback((timeSlot: TimeSlotType) => setTimeSlots(timeSlots.filter(t => t !== timeSlot)), [timeSlots]);
 
     const [name, setName] = React.useState('');
     const onChangeName = React.useCallback(e => setName(e.target.value), []);
