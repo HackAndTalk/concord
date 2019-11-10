@@ -37,7 +37,7 @@ const overbookedRoomsPenalty = ({ timeSlotSessions }: Schedule) => {
 
   const totalDuplicateBookings = sum(timeSlotDuplicateBookings)
 
-  return totalDuplicateBookings * 10
+  return totalDuplicateBookings * 100
 }
 
 const duplicateTopicsPenalty = ({ timeSlotSessions }: Schedule) => {
@@ -65,7 +65,7 @@ const moderatorConflictPenalty = (
     return numDuplicateModerations
   })
   const totalDuplicateModerations = sum(timeSlotDuplicateModerations)
-  return totalDuplicateModerations * 10
+  return totalDuplicateModerations * 100
 }
 
 const penaltyFunctions = [
