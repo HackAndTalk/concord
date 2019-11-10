@@ -5,9 +5,11 @@ import { Gathering, Topic } from '../../../shared/types'
 
 import { gathering } from '../../../shared/randomGathering'
 import { Schedule } from './types'
+import { crossover } from './crossover'
 
 const populationSize = 100
-const numParents = 50
+const numParents = 20
+const numMutants = populationSize - numParents
 
 const timeoutMs = 5 * 1000
 const start = Date.now()
