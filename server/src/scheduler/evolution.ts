@@ -1,8 +1,7 @@
 import { randomSchedule } from './creation'
 import { penalty } from './evaluation'
 import { swapSessions } from './mutation'
-import { Gathering, Topic } from '../../../shared/types'
-
+import { Gathering, Room, Topic } from '../../../shared/types'
 import { gathering } from '../../../shared/randomGathering'
 import { Schedule } from './types'
 import { crossover } from './crossover'
@@ -19,10 +18,15 @@ const evaluateSchedule = (schedule: Schedule) => {
   return { schedule, penalty: penalty(schedule, gathering) }
 }
 
+type RoomTopic = {
+  room: Room
+  topic: Topic
+}
+
 type TimeSlotTopics = {
   startTime: Date
   endTime: Date
-  topics: Topic[]
+  roomTopics: RoomTopic[]
 }
 
 export const evolveSchedule = (gathering: Gathering): TimeSlotTopics[] => {
@@ -53,16 +57,20 @@ export const evolveSchedule = (gathering: Gathering): TimeSlotTopics[] => {
 
   const bestSchedule = population[0]
 
-  const { timeSlots, topics } = gathering
+  const { timeSlots, rooms, topics } = gathering
   const scheduleTimeSlots = bestSchedule.timeSlotSessions.map(
     (sessions, index) => {
       const timeSlot = timeSlots[index]
+      const timeSlotTopics = sessions.flatMap(session =>
+        topics.filter(topic => topic.id === session.topicId),
+      )
       return {
         startTime: timeSlot.startTime,
         endTime: timeSlot.endTime,
-        topics: sessions.flatMap(session =>
-          topics.filter(topic => topic.id === session.topicId),
-        ),
+        roomTopics: timeSlotTopics.map((topic, i) => ({
+          room: rooms[i],
+          topic,
+        })),
       }
     },
   )
