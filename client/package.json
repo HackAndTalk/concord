@@ -16,6 +16,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/react-router-dom": "^5.1.2",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-compress": "^1.0.11",
     "typescript": "^3.7.2"
   },
   "dependencies": {
