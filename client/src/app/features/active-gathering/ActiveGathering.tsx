@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useRouteMatch } from 'react-router';
 import ShareEvent from '../share-event/ShareEvent';
 import Topics from '../topics/Topics';
+import Schedule from '../schedule/Schedule';
 import { GatheringContext, TGatheringContext, createGatheringApi } from './gathering-api';
 import { subscribeToGathering } from '../../../firebase/firebase';
 import { Gathering } from '../../../../../shared/types';
@@ -60,7 +61,7 @@ const ActiveGathering: React.FC = () => {
 
       // 3 - SCHEDULE
       case 3:
-        return <div>schedule</div>
+        return <Schedule />
     }
 
     return null;

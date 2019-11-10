@@ -32,4 +32,21 @@ export type Gathering = {
   rooms: Room[]
   timeSlots: TimeSlot[]
   stage: 0 | 1 | 2 | 3
+  schedule?: TimeSlotTopics[]
+}
+
+export type RoomTopic = {
+  room: Room
+  topic: Topic
+}
+
+export type TimeSlotTopics = {
+  startTime: FirebaseTimestamp
+  endTime: FirebaseTimestamp
+  roomTopics: RoomTopic[]
+}
+
+export type FirebaseTimestamp = {
+  seconds: number
+  nanoseconds: number
 }
