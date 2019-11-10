@@ -1,6 +1,10 @@
 import * as React from 'react'
-import { styled, Typography, Box, Button } from '@material-ui/core'
-import { Topic, Schedule } from '../../../../../../shared/types'
+import { styled, Typography, Box } from '@material-ui/core'
+import {
+  Topic,
+  TimeSlotTopics,
+  RoomTopic,
+} from '../../../../../../shared/types'
 import { useUserId } from '../../../hooks'
 import moment from 'moment'
 
@@ -17,21 +21,22 @@ type TopicSuggestionsProps = {
 }
 
 type TimelineProps = {
-  schedule: Schedule
+  schedule: TimeSlotTopics[]
 }
 
-const orderTopics = (topics: Topic[], participantId: string) => {
-  const topicSortCompareFn = (a: Topic, b: Topic) =>
-    a.voterIds.length - b.voterIds.length
+const orderRoomTopics = (roomTopics: RoomTopic[], participantId: string) => {
+  const topicSortCompareFn = (a: RoomTopic, b: RoomTopic) =>
+    a.topic.voterIds.length - b.topic.voterIds.length
 
-  const likedTopics = topics
-    .filter(topic => topic.voterIds.includes(participantId))
-    .sort(topicSortCompareFn)
-  const notLikedTopics = topics
-    .filter(topic => !topic.voterIds.includes(participantId))
+  const likedRoomTopics = roomTopics
+    .filter(roomTopic => roomTopic.topic.voterIds.includes(participantId))
     .sort(topicSortCompareFn)
 
-  return [...likedTopics, ...notLikedTopics]
+  const notLikedRoomTopics = roomTopics
+    .filter(roomTopic => !roomTopic.topic.voterIds.includes(participantId))
+    .sort(topicSortCompareFn)
+
+  return [...likedRoomTopics, ...notLikedRoomTopics]
 }
 
 const TimelineContainer = styled('div')(({ theme }) => ({
@@ -87,13 +92,13 @@ const TopicSuggestionTitle = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }))
 
-const TopicsContainer = styled('div')(({ theme }) => ({
-  display: 'flex',
-  overflowX: 'scroll',
-  '&::-webkit-scrollbar': {
-    width: 0,
-  },
-}))
+// const TopicsContainer = styled('div')(({ theme }) => ({
+//   display: 'flex',
+//   overflowX: 'scroll',
+//   '&::-webkit-scrollbar': {
+//     width: 0,
+//   },
+// }))
 
 // const TopicSuggestions: React.SFC<TopicSuggestionsProps> = ({ topics }) => {
 //   return (
@@ -146,13 +151,13 @@ const Timeline: React.FC<TimelineProps> = ({ schedule }) => {
   return (
     <TimelineContainer>
       {schedule.map((timeslot, index) => {
-        const topics = orderTopics(timeslot.topics, userId)
+        const topics = orderRoomTopics(timeslot.roomTopics, userId)
 
         return (
           <TopicRow
             time={moment(timeslot.startTime).format('HH:mm')}
-            topicName={topics[0].title}
-            roomName="Bucharest" // TODO: Use actual room
+            topicName={topics[0].topic.title}
+            roomName={topics[0].room.name}
             isLast={index === schedule.length - 1}
             key={index}
           />
