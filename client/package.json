@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel src/index.html",
+    "build": "parcel build --out-dir ./build/ src/index.html",
     "test-firebase": "yarn ts-node-dev src/firebase/test.ts"
   },
   "author": "",
