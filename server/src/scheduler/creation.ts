@@ -11,22 +11,31 @@ export const randomSchedule = ({
   const shuffledTopics = Array.from(topics).sort(() => Math.random() - 0.5)
 
   for (const topic of shuffledTopics) {
-    // TODO: prefer adding to time slot with fewest sessions
-    const firstAvailableTimeSlotIndex = timeSlotSessions.findIndex(
-      timeSlot => timeSlot.length < rooms.length,
+    const leastOccupiedTimeSlotIndex = timeSlotSessions.reduce(
+      (bestIndex, sessions, currentIndex) => {
+        if (
+          sessions.length < rooms.length &&
+          (bestIndex === -1 ||
+            sessions.length < timeSlotSessions[bestIndex].length)
+        ) {
+          return currentIndex
+        }
+        return bestIndex
+      },
+      -1,
     )
-    const scheduleIsFull = firstAvailableTimeSlotIndex === -1
+    const scheduleIsFull = leastOccupiedTimeSlotIndex === -1
     if (scheduleIsFull) {
       break
     }
-    const sessions = timeSlotSessions[firstAvailableTimeSlotIndex]
+    const sessions = timeSlotSessions[leastOccupiedTimeSlotIndex]
     const numExistingSessions = sessions.length
     const nextRoom = rooms[numExistingSessions]
     const session = {
       topicId: topic.id,
       roomId: nextRoom.id,
     }
-    timeSlotSessions[firstAvailableTimeSlotIndex].push(session)
+    timeSlotSessions[leastOccupiedTimeSlotIndex].push(session)
   }
   const schedule = {
     timeSlotSessions,
