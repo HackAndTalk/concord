@@ -24,8 +24,8 @@ const TimeSlotDialog: React.FC<IProps & DialogProps> = ({ onAddTimeSlot, ...prop
 
     const onSubmit = React.useCallback((e) => {
         onAddTimeSlot({
-            startTime,
-            endTime,
+            startTime: moment(startTime).toDate(),
+            endTime: moment(endTime).toDate(),
             id: uuid.v4()
         });
         setStartTime(new Date());
