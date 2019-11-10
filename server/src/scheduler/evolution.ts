@@ -1,7 +1,8 @@
 import { randomSchedule } from './creation'
 import { penalty } from './evaluation'
 import { swapSessions } from './mutation'
-import { Gathering, Room, Topic } from '../../../shared/types'
+import { Gathering, TimeSlotTopics } from '../../../shared/types'
+
 import { gathering } from '../../../shared/randomGathering'
 import { Schedule } from './types'
 import { crossover } from './crossover'
@@ -16,17 +17,6 @@ const end = start + timeoutMs
 
 const evaluateSchedule = (schedule: Schedule) => {
   return { schedule, penalty: penalty(schedule, gathering) }
-}
-
-type RoomTopic = {
-  room: Room
-  topic: Topic
-}
-
-type TimeSlotTopics = {
-  startTime: Date
-  endTime: Date
-  roomTopics: RoomTopic[]
 }
 
 export const evolveSchedule = (gathering: Gathering): TimeSlotTopics[] => {

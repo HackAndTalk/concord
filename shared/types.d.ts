@@ -32,4 +32,16 @@ export type Gathering = {
   rooms: Room[]
   timeSlots: TimeSlot[]
   stage: 0 | 1 | 2 | 3
+  schedule?: TimeSlotTopics[]
+}
+
+export type RoomTopic = {
+  room: Room
+  topic: Topic
+}
+
+export type TimeSlotTopics = {
+  startTime: Date
+  endTime: Date
+  roomTopics: RoomTopic[]
 }
