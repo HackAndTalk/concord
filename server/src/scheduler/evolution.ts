@@ -34,10 +34,19 @@ export const evolveSchedule = (gathering: Gathering): TimeSlotTopics[] => {
     const parents = evaluatedPopulation
       .slice(0, numParents)
       .map(({ schedule }) => schedule)
-    const children = parents.flatMap(parent =>
-      Array.from({ length: 9 }, () => swapSessions(parent)),
+
+    const mutationRate = Math.ceil(numMutants / numParents)
+
+    const mutants = parents.flatMap(parent =>
+      Array.from({ length: mutationRate }, () => swapSessions(parent)),
     )
-    population = [...parents, ...children]
+    const crossovers = Array.from(
+      { length: Math.floor(numParents / 2) },
+      (_, i) => crossover(parents[i], parents[numParents - i - 1]),
+    )
+    const offspring = [...mutants, ...crossovers]
+
+    population = [...parents, ...offspring]
   } while (Date.now() < end)
 
   const bestSchedule = population[0]
